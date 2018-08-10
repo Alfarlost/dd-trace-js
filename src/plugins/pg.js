@@ -7,7 +7,12 @@ const OPERATION_NAME = 'pg.query'
 function patch (pg, tracer, config) {
   function queryWrap (query) {
     return function queryTrace () {
-      const pgQuery = query.apply(this, arguments)
+      const retval = query.apply(this, arguments)
+      const pgQuery = this.queryQueue[this.queryQueue.length - 1] || this.activeQuery
+      if (!pgQuery) {
+        return retval
+      }
+      // const pgQuery = query.apply(this, arguments)
       const originalCallback = pgQuery.callback
       const statement = pgQuery.text
       const params = this.connectionParameters
@@ -54,7 +59,7 @@ function patch (pg, tracer, config) {
         }
       }
 
-      return pgQuery
+      return retval
     }
   }
 
@@ -67,7 +72,7 @@ function unpatch (pg) {
 
 module.exports = {
   name: 'pg',
-  versions: ['6.x'],
+  versions: ['6.x', '7.x'],
   patch,
   unpatch
 }

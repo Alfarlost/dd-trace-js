@@ -1,0 +1,9 @@
+{
+  "name": "pg-7f3ce53481f0d78173e13ac6ab96f49fa70e7aeb",
+  "version": "1.0.0",
+  "license": "BSD-3-Clause",
+  "private": true,
+  "dependencies": {
+    "pg": "6.x"
+  }
+}

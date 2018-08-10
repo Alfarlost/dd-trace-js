@@ -1,0 +1,9 @@
+{
+  "name": "amqplib-9be2afa3ca10f3f69adc5aefe934532749362fa5",
+  "version": "1.0.0",
+  "license": "BSD-3-Clause",
+  "private": true,
+  "dependencies": {
+    "amqplib": "0.5.0"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "elasticsearch-0b6aafbb7103a89c99f9ad25b39ba49e99dbf3db",
+  "version": "1.0.0",
+  "license": "BSD-3-Clause",
+  "private": true,
+  "dependencies": {
+    "elasticsearch": "15.x"
+  }
+}

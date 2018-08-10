@@ -1,0 +1,9 @@
+{
+  "name": "express-e84cb7901bfc0c77ad7acf3cc599c644e3b8fcf6",
+  "version": "1.0.0",
+  "license": "BSD-3-Clause",
+  "private": true,
+  "dependencies": {
+    "express": "4.x"
+  }
+}

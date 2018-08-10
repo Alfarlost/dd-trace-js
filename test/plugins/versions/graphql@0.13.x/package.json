@@ -1,0 +1,9 @@
+{
+  "name": "graphql-26a5062070554e22465750032a3d3cba1a7c30c6",
+  "version": "1.0.0",
+  "license": "BSD-3-Clause",
+  "private": true,
+  "dependencies": {
+    "graphql": "0.13.x"
+  }
+}

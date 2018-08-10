@@ -1,0 +1,9 @@
+{
+  "name": "mysql-1c7efad91429fde780d6200875cd11d7d6bd3765",
+  "version": "1.0.0",
+  "license": "BSD-3-Clause",
+  "private": true,
+  "dependencies": {
+    "mysql": "2.x"
+  }
+}

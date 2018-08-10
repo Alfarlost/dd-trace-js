@@ -1,0 +1,9 @@
+{
+  "name": "mongodb-core-2a75ee1c8b691fdb43e2c8e24304e6a3ce742c4e",
+  "version": "1.0.0",
+  "license": "BSD-3-Clause",
+  "private": true,
+  "dependencies": {
+    "mongodb-core": "3.x"
+  }
+}

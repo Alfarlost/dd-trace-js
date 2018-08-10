@@ -1,0 +1,9 @@
+{
+  "name": "redis-b6ed966424606782d1fc2f9032f0fb0e4d237bd7",
+  "version": "1.0.0",
+  "license": "BSD-3-Clause",
+  "private": true,
+  "dependencies": {
+    "redis": "2.6.0"
+  }
+}
