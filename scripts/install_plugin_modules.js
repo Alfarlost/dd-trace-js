@@ -5,6 +5,7 @@ const path = require('path')
 const requireDir = require('require-dir')
 const crypto = require('crypto')
 const semver = require('semver')
+const exec = require('./helpers/exec')
 
 const plugins = requireDir('../src/plugins')
 
@@ -19,6 +20,8 @@ Object.keys(plugins).filter(key => key !== 'index').forEach(key => {
     })
   })
 })
+
+install()
 
 function assertModules (name, version) {
   assertFolder(name, version)
@@ -45,6 +48,10 @@ function assertPackage (name, version) {
 function assertIndex (name, version) {
   const index = `'use strict'\n\nmodule.exports = require('${name}')\n`
   fs.writeFileSync(filename(name, version, 'index.js'), index)
+}
+
+function install () {
+  exec('yarn', { cwd: folder() })
 }
 
 function folder (name, version) {
