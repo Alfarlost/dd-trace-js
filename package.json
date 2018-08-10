@@ -9,7 +9,8 @@
     "jsdoc:watch": "gulp jsdoc:watch",
     "lint": "eslint . && node scripts/check_licenses.js",
     "tdd": "mocha --watch",
-    "test": "nyc --reporter text --reporter lcov mocha 'test/**/*.spec.js'"
+    "test": "nyc --reporter text --reporter lcov mocha 'test/**/*.spec.js'",
+    "prepublish": "node ./scripts/install_plugin_modules"
   },
   "repository": {
     "type": "git",

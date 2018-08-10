@@ -6,24 +6,34 @@ const requireDir = require('require-dir')
 const crypto = require('crypto')
 const semver = require('semver')
 const exec = require('./helpers/exec')
-
 const plugins = requireDir('../src/plugins')
 
-Object.keys(plugins).filter(key => key !== 'index').forEach(key => {
-  [].concat(plugins[key]).forEach(instrumentation => {
-    [].concat(instrumentation.versions).forEach(version => {
-      assertModules(instrumentation.name, version)
+const folders = new Set()
 
-      if (version) {
-        assertModules(instrumentation.name, semver.coerce(version).version)
-      }
+run()
+
+function run () {
+  assertVersions()
+  assertWorkspace()
+  install()
+}
+
+function assertVersions () {
+  Object.keys(plugins).filter(key => key !== 'index').forEach(key => {
+    [].concat(plugins[key]).forEach(instrumentation => {
+      [].concat(instrumentation.versions).forEach(version => {
+        assertModules(instrumentation.name, version)
+
+        if (version) {
+          assertModules(instrumentation.name, semver.coerce(version).version)
+        }
+      })
     })
   })
-})
-
-install()
+}
 
 function assertModules (name, version) {
+  addFolder(name, version)
   assertFolder(name, version)
   assertPackage(name, version)
   assertIndex(name, version)
@@ -42,7 +52,7 @@ function assertPackage (name, version) {
     dependencies: {
       [name]: version
     }
-  }, null, 2))
+  }, null, 2) + '\n')
 }
 
 function assertIndex (name, version) {
@@ -50,8 +60,23 @@ function assertIndex (name, version) {
   fs.writeFileSync(filename(name, version, 'index.js'), index)
 }
 
+function assertWorkspace () {
+  fs.writeFileSync(filename(null, null, 'package.json'), JSON.stringify({
+    name: 'versions',
+    version: '1.0.0',
+    license: 'BSD-3-Clause',
+    private: true,
+    workspaces: Array.from(folders)
+  }, null, 2) + '\n')
+}
+
 function install () {
   exec('yarn', { cwd: folder() })
+}
+
+function addFolder (name, version) {
+  const basename = [name, version].filter(val => val).join('@')
+  folders.add(path.join('versions', basename))
 }
 
 function folder (name, version) {

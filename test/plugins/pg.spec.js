@@ -4,6 +4,18 @@ const agent = require('./agent')
 
 wrapIt()
 
+// function pluginVersions (plugin) {
+//   const versions = new Set()
+
+//   ;[].concat(plugin)
+//     .filter(instrumentation => instrumentation.name === plugin)
+//     .forEach(instrumentation => {
+//       instrumentation.versions.forEach(version => {
+//         versions.add(version)
+//       })
+//     })
+// }
+
 describe('Plugin', () => {
   let plugin
   let pg
