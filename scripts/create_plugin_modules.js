@@ -8,7 +8,7 @@ const semver = require('semver')
 
 const plugins = requireDir('../src/plugins')
 
-Object.keys(plugins).forEach(key => {
+Object.keys(plugins).filter(key => key !== 'index').forEach(key => {
   [].concat(plugins[key]).forEach(instrumentation => {
     [].concat(instrumentation.versions).forEach(version => {
       assertModules(instrumentation.name, version)
