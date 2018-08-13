@@ -5,6 +5,7 @@ const chai = require('chai')
 const sinonChai = require('sinon-chai')
 const proxyquire = require('proxyquire')
 const nock = require('nock')
+const semver = require('semver')
 const retry = require('retry')
 const pg = require('pg')
 const mysql = require('mysql')
@@ -33,6 +34,7 @@ global.expect = chai.expect
 global.proxyquire = proxyquire
 global.nock = nock
 global.wrapIt = wrapIt
+global.withVersions = withVersions
 
 platform.use(node)
 
@@ -232,4 +234,22 @@ function wrapIt () {
       })
     }
   }
+}
+
+function withVersions (plugin, moduleName, cb) {
+  const instrumentations = [].concat(plugin)
+  const testVersions = new Set()
+
+  instrumentations
+    .filter(instrumentation => instrumentation.name === moduleName)
+    .forEach(instrumentation => {
+      instrumentation.versions.forEach(version => {
+        testVersions.add(version)
+        testVersions.add(semver.coerce(version).version)
+      })
+    })
+
+  testVersions.forEach(version => {
+    describe(`with ${moduleName} ${version}`, () => cb(version))
+  })
 }

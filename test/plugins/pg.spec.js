@@ -1,43 +1,30 @@
 'use strict'
 
 const agent = require('./agent')
+const plugin = require('../../src/plugins/pg')
 
 wrapIt()
 
-// function pluginVersions (plugin) {
-//   const versions = new Set()
-
-//   ;[].concat(plugin)
-//     .filter(instrumentation => instrumentation.name === plugin)
-//     .forEach(instrumentation => {
-//       instrumentation.versions.forEach(version => {
-//         versions.add(version)
-//       })
-//     })
-// }
-
 describe('Plugin', () => {
-  let plugin
   let pg
   let client
   let tracer
 
-  ['6.x', '7.x'].forEach(v => {
-    describe('pg', () => {
-      before(() => {
-        plugin = require('../../src/plugins/pg')
-        tracer = require('../..')
-      })
+  describe('pg', () => {
+    before(() => {
+      tracer = require('../..')
+    })
 
-      after(() => {
-        agent.close()
-      })
+    after(() => {
+      agent.close()
+    })
 
+    withVersions(plugin, 'pg', version => {
       describe('when using a client', () => {
         beforeEach(done => {
           agent.load(plugin, 'pg')
             .then(() => {
-              pg = require(`./versions/pg@${v}`)
+              pg = require(`./versions/pg@${version}`)
 
               client = new pg.Client({
                 user: 'postgres',
