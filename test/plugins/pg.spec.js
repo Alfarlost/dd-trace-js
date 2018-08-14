@@ -11,15 +11,15 @@ describe('Plugin', () => {
   let tracer
 
   describe('pg', () => {
-    before(() => {
-      tracer = require('../..')
-    })
-
-    after(() => {
-      agent.close()
-    })
-
     withVersions(plugin, 'pg', version => {
+      beforeEach(() => {
+        tracer = require('../..')
+      })
+
+      afterEach(() => {
+        agent.close()
+      })
+
       describe('when using a client', () => {
         beforeEach(done => {
           agent.load(plugin, 'pg')

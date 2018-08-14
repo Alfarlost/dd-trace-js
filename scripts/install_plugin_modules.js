@@ -8,7 +8,7 @@ const semver = require('semver')
 const exec = require('./helpers/exec')
 const plugins = requireDir('../src/plugins')
 
-const folders = new Set()
+const workspaces = new Set()
 
 run()
 
@@ -66,7 +66,7 @@ function assertWorkspace () {
     version: '1.0.0',
     license: 'BSD-3-Clause',
     private: true,
-    workspaces: Array.from(folders)
+    workspaces: Array.from(workspaces)
   }, null, 2) + '\n')
 }
 
@@ -76,7 +76,7 @@ function install () {
 
 function addFolder (name, version) {
   const basename = [name, version].filter(val => val).join('@')
-  folders.add(path.join('versions', basename))
+  workspaces.add(basename)
 }
 
 function folder (name, version) {
